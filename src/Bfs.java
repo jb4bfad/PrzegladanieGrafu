@@ -1,6 +1,14 @@
 import java.util.LinkedList;
 
 public class Bfs extends PrzegladanieGrafu{
+    void pobierz(Wierzcholek wierzcholek)
+    {
+        printNode(wierzcholek);
+    }
+    void wstaw(Wierzcholek wierzcholek)
+    {
+        printNode(wierzcholek);
+    }
     public  Bfs(Wierzcholek rootNode, LinkedList nodes, int[][] adjMatrix, int size)
     {
         LinkedList q=new LinkedList();
@@ -15,7 +23,7 @@ public class Bfs extends PrzegladanieGrafu{
             while((child=getUnvisitedChildNode(n, nodes,adjMatrix,size))!=null)
             {
                 child.visited=true;
-                printNode(child);
+                pobierz(child);
                 q.add(child);
             }
         }

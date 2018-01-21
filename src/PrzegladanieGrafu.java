@@ -2,8 +2,8 @@
 import java.util.*;
 
 abstract class PrzegladanieGrafu {
-  //  abstract void wstaw();
-//    abstract void pobierz();
+    abstract void wstaw(Wierzcholek wierzcholek);
+    abstract void pobierz(Wierzcholek wierzcholek);
 
     public Wierzcholek rootNode;
     public LinkedList nodes=new LinkedList();

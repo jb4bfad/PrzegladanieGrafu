@@ -1,11 +1,19 @@
 import java.util.LinkedList;
 
 public class Dfs extends PrzegladanieGrafu{
+    void pobierz(Wierzcholek wierzcholek)
+    {
+        printNode(wierzcholek);
+    }
+    void wstaw(Wierzcholek wierzcholek)
+    {
+        printNode(wierzcholek);
+    }
     public  Dfs(Wierzcholek rootNode, LinkedList nodes, int[][] adjMatrix, int size) {
         LinkedList s = new LinkedList();
         s.add(rootNode);
         rootNode.visited = true;
-        printNode(rootNode);
+        pobierz(rootNode);
         while (!s.isEmpty()) {
 
             Wierzcholek n = (Wierzcholek) s.peekLast();
@@ -15,7 +23,8 @@ public class Dfs extends PrzegladanieGrafu{
             if (child != null) {
 
                 child.visited = true;
-                printNode(child);
+                pobierz(child);
+               // printNode(child);
                 s.add(child);
             } else {
                 s.removeLast();
@@ -24,4 +33,6 @@ public class Dfs extends PrzegladanieGrafu{
         //Clear visited property of nodes
 
     }
+
+
 }

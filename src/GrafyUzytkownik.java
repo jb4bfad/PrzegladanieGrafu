@@ -1,43 +1,73 @@
-public class GrafyUzytkownik extends PrzegladanieGrafu  {
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.StreamTokenizer;
 
+public class GrafyUzytkownik  {
+       public static void main(String[] args){
+        Wierzcholek [] w;
 
-    public static void main(String[] args){
-        Wierzcholek nA=new Wierzcholek(1);
-        Wierzcholek nB=new Wierzcholek(2);
-        Wierzcholek nC=new Wierzcholek(3);
-        Wierzcholek nD=new Wierzcholek(4);
-        Wierzcholek nE=new Wierzcholek(5);
-        Wierzcholek nF=new Wierzcholek(6);
+    PrzegladanieGrafu g=new PrzegladanieGrafu() {
+            public void wstaw(Wierzcholek wierzcholek) {};
+            public void pobierz(Wierzcholek wierzcholek){};
+    };
 
+        int x = 0, y = 0, wierzcholki = 0, krawedzie = 0;
+        Double d;
+        FileReader fr= null;
 
+        try {
+            fr = new FileReader("plik.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("BŁĄD PRZY OTWIERANIU PLIKU!");
+            System.exit(1);
+        }
 
-        //Create the graph, add nodes, create edges between nodes
-        PrzegladanieGrafu g=new PrzegladanieGrafu() {
-            public void wstaw(){};
-            public void pobierz(){};
-        };
-        g.addNode(nA);
-        g.addNode(nB);
-        g.addNode(nC);
-        g.addNode(nD);
-        g.addNode(nE);
-        g.addNode(nF);
-        g.setRootNode(nA);
+        StreamTokenizer st = new StreamTokenizer(fr);
+        try {
+            wierzcholki = st.nextToken();
+            d = st.nval;
+            wierzcholki = d.intValue();
+            krawedzie = st.nextToken();
+            d = st.nval;
+            krawedzie = d.intValue();
 
-        g.connectNode(nA,nB);
-        g.connectNode(nA,nC);
-        g.connectNode(nA,nD);
+           w = new Wierzcholek[wierzcholki];
+            for(int i=0; i<krawedzie; i++)
+            {
+                w[i]= new Wierzcholek(i+1);
+                g.addNode(w[i]);
+            }
+            g.setRootNode(w[0]);
 
-        g.connectNode(nB,nE);
-        g.connectNode(nB,nF);
-        g.connectNode(nC,nF);
+            for(int i=0; i<krawedzie; i++)
+            {
+                x = st.nextToken();
+                d = st.nval;
+                x = d.intValue();
+                y = st.nextToken();
+                d = st.nval;
+                y = d.intValue();
+                System.out.println("x "+x+" y "+y);
+                g.connectNode(w[x-1], w[y-1]);
+            }
+        } catch (IOException e) {
+            System.out.println("BŁĄD ODCZYTU Z PLIKU!");
+            System.exit(2);
+        }
 
-
-        //Perform the traversal of the graph
-        System.out.println("DFS Traversal of a tree is ------------->");
+        //ZAMYKANIE PLIKU:
+        try {
+            fr.close();
+        } catch (IOException e) {
+            System.out.println("BŁĄD PRZY ZAMYKANIU PLIKU!");
+            System.exit(3);
+        }
+        System.out.println("Przebieg algorytmu DFS");
         g.dfs();
-        System.out.println("\nBFS Traversal of a tree is ------------->");
+        System.out.println("\nPrzebieg algorytmu BFS");
         g.bfs();
 
     }
+
 }
