@@ -5,16 +5,15 @@ import java.io.StreamTokenizer;
 
 public class GrafyUzytkownik  {
        public static void main(String[] args){
-        Wierzcholek [] w;
+       Wierzcholek [] w;
 
     PrzegladanieGrafu g=new PrzegladanieGrafu() {
             public void wstaw(Wierzcholek wierzcholek) {};
             public void pobierz(Wierzcholek wierzcholek){};
     };
-
-        int x = 0, y = 0, wierzcholki = 0, krawedzie = 0;
-        Double d;
-        FileReader fr= null;
+    int x = 0, y = 0, wierzcholki = 0, krawedzie = 0;
+    Double d;
+    FileReader fr= null;
 
         try {
             fr = new FileReader("plik.txt");
@@ -36,9 +35,9 @@ public class GrafyUzytkownik  {
             for(int i=0; i<krawedzie; i++)
             {
                 w[i]= new Wierzcholek(i+1);
-                g.addNode(w[i]);
+                g.dodajw(w[i]);
             }
-            g.setRootNode(w[0]);
+            g.setstartowy(w[0]);
 
             for(int i=0; i<krawedzie; i++)
             {
@@ -56,16 +55,15 @@ public class GrafyUzytkownik  {
             System.exit(2);
         }
 
-        //ZAMYKANIE PLIKU:
         try {
             fr.close();
         } catch (IOException e) {
             System.out.println("BŁĄD PRZY ZAMYKANIU PLIKU!");
             System.exit(3);
         }
-        System.out.println("Przebieg algorytmu DFS");
+    System.out.println("Przebieg algorytmu DFS");
         g.dfs();
-        System.out.println("\nPrzebieg algorytmu BFS");
+    System.out.println("\nPrzebieg algorytmu BFS");
         g.bfs();
 
     }

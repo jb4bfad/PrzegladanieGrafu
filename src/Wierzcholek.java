@@ -1,9 +1,9 @@
 public class Wierzcholek {
 
-    public int label;
+    public int wartosc;
     public boolean visited=false;
-    public Wierzcholek(int l)
+    public Wierzcholek(int x)
     {
-        this.label=l;
+        this.wartosc=x;
     }
 }

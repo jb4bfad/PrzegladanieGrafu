@@ -1,56 +1,55 @@
-
 import java.util.*;
 
 abstract class PrzegladanieGrafu {
     abstract void wstaw(Wierzcholek wierzcholek);
     abstract void pobierz(Wierzcholek wierzcholek);
 
-    public Wierzcholek rootNode;
-    public LinkedList nodes=new LinkedList();
-    public int[][] adjMatrix;//Edges will be represented as adjacency Matrix
+    public Wierzcholek wstartowy;
+    public LinkedList wlista=new LinkedList();
+    public int[][] macierz;
     int size;
-    public void setRootNode(Wierzcholek n)
+    public void setstartowy(Wierzcholek n)
     {
-        this.rootNode=n;
+        this.wstartowy=n;
     }
 
     public Wierzcholek getRootNode()
     {
-        return this.rootNode;
+        return this.wstartowy;
     }
 
-    public void addNode(Wierzcholek n)
+    public void dodajw(Wierzcholek n)
     {
-        nodes.add(n);
+        wlista.add(n);
     }
 
-    //This method will be called to make connect two nodes
+    //This method will be called to make connect two wlista
     public void connectNode(Wierzcholek start,Wierzcholek end)
     {
-        if(adjMatrix==null)
+        if(macierz==null)
         {
-            size=nodes.size();
-            adjMatrix=new int[size][size];
+            size=wlista.size();
+            macierz=new int[size][size];
         }
 
-        int startIndex=nodes.indexOf(start);
-        int endIndex=nodes.indexOf(end);
-        adjMatrix[startIndex][endIndex]=1;
-        adjMatrix[endIndex][startIndex]=1;
+        int startIndex=wlista.indexOf(start);
+        int endIndex=wlista.indexOf(end);
+        macierz[startIndex][endIndex]=1;
+        macierz[endIndex][startIndex]=1;
     }
 
-    public Wierzcholek getUnvisitedChildNode(Wierzcholek n, LinkedList nodes, int[][] adjMatrix, int size)
+    public Wierzcholek getUnvisitedChildNode(Wierzcholek n, LinkedList wlista, int[][] macierz, int size)
     {
 
-        int index=nodes.indexOf(n);
+        int index=wlista.indexOf(n);
         int j=0;
         //System.out.println("\n["+size);
         while(j<size)
         {
-            //if(((Wierzcholek)nodes.get(j)).visited==false) System.out.println("["+index+ "]");
-            if(adjMatrix[index][j]==1 && ((Wierzcholek)nodes.get(j)).visited==false)
+            //if(((Wierzcholek)wlista.get(j)).visited==false) System.out.println("["+index+ "]");
+            if(macierz[index][j]==1 && ((Wierzcholek)wlista.get(j)).visited==false)
             {
-                return (Wierzcholek)nodes.get(j);
+                return (Wierzcholek)wlista.get(j);
             }
             j++;
         }
@@ -60,33 +59,33 @@ abstract class PrzegladanieGrafu {
     //BFS traversal of a tree is performed by the bfs() function
     public void bfs()
     {
-        Bfs d= new Bfs(rootNode, nodes, adjMatrix,size);
-        clearNodes();
+        Bfs d= new Bfs(wstartowy, wlista, macierz,size);
+        wyczysc();
     }
 
     //DFS traversal of a tree is performed by the dfs() function
     public void dfs()
     {
-        Dfs d= new Dfs(rootNode, nodes, adjMatrix,size);
-        clearNodes();
+        Dfs d= new Dfs(wstartowy, wlista, macierz,size);
+        wyczysc();
     }
 
 
     //Utility methods for clearing visited property of Wierzcholek
-    public void clearNodes()
+    public void wyczysc()
     {
         int i=0;
         while(i<size)
         {
-            Wierzcholek n=(Wierzcholek)nodes.get(i);
+            Wierzcholek n=(Wierzcholek)wlista.get(i);
             n.visited=false;
             i++;
         }
     }
 
     //Utility methods for printing the Wierzcholek's label
-    public void printNode(Wierzcholek n)
+    public void drukuj(Wierzcholek n)
     {
-        System.out.print(n.label+" ");
+        System.out.print(n.wartosc+" ");
     }
 }

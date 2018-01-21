@@ -1,38 +1,31 @@
 import java.util.LinkedList;
 
 public class Dfs extends PrzegladanieGrafu{
+    LinkedList s = new LinkedList();
     void pobierz(Wierzcholek wierzcholek)
     {
-        printNode(wierzcholek);
+        drukuj(wierzcholek);
     }
     void wstaw(Wierzcholek wierzcholek)
     {
-        printNode(wierzcholek);
+        s.add(wierzcholek);
     }
-    public  Dfs(Wierzcholek rootNode, LinkedList nodes, int[][] adjMatrix, int size) {
-        LinkedList s = new LinkedList();
-        s.add(rootNode);
-        rootNode.visited = true;
-        pobierz(rootNode);
+    public  Dfs(Wierzcholek wstartowy, LinkedList wlista, int[][] macierz, int size) {
+
+        wstaw(wstartowy);
+        wstartowy.visited = true;
+        pobierz(wstartowy);
         while (!s.isEmpty()) {
-
             Wierzcholek n = (Wierzcholek) s.peekLast();
+            Wierzcholek nast =  getUnvisitedChildNode(n, wlista, macierz, size);
 
-            Wierzcholek child =  getUnvisitedChildNode(n, nodes, adjMatrix, size);
-
-            if (child != null) {
-
-                child.visited = true;
-                pobierz(child);
-               // printNode(child);
-                s.add(child);
+            if (nast != null) {
+                nast.visited = true;
+                pobierz(nast);
+                wstaw(nast);
             } else {
                 s.removeLast();
             }
         }
-        //Clear visited property of nodes
-
     }
-
-
 }
